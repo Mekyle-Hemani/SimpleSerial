@@ -12,7 +12,7 @@ def readForMulti(searching, rate=9600, debug=0):
             return result #Return what result was found
 
 #Creates a new function that can constantly search for one item "searching" variable
-def readForMulti(searching, rate=9600, debug=0):
+def readFor(searching, rate=9600, debug=0):
     while True: #While the micro controller returned items are not the wanted items
         result = communication.readData(rate=rate, debug=debug) #Grab the given result from the micro controller
         if result == searching: #If the result is in the wanted items list

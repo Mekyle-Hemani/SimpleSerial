@@ -99,9 +99,3 @@ def readData(data=None, rate=9600, debug=0):
     finally:
         if ser.is_open: #Ensure the port is closed after completion
             ser.close()
-
-if __name__ == "__main__":
-    #The first field is the text you want to send
-    #The second field is the baudrate (Optional)
-    #The second field is the debug function (Optional) 0-1
-    print(sendData("123456", 9600, 1))
