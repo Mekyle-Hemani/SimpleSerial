@@ -1,20 +1,19 @@
-import serial #Required library for sending data to an Arduino
-import serial.tools.list_ports #Required librray for checking all available Arduinos
+import serial #Required library for sending data to an micro controller
+import serial.tools.list_ports #Required librray for checking all available micro controllers
 import time as delaycode #Required library for delaying the code
 
-
-#Data is the text that will be sent to the Arduino
-#Rate is the rate of the information being sent (This is different for all types of Arduinos however the Arduino Uno uses 9600)
+#Data is the text that will be sent to the micro controller
+#Rate is the rate of the information being sent (This is different for all types of micro controllers however the micro controller Uno uses 9600)
 
 def sendData(data, rate=9600, debug=0):
-    #This section is for finding and initializing your Arduino
+    #This section is for finding and initializing your micro controller
 
     ports = serial.tools.list_ports.comports() #These are all the found ports that are active
     comports = [port.device for port in ports] #For each COM port in the list of active ports
 
     if not comports: #If there are no found ports
         if debug == 1: #If the debug mode is enabled
-            print("Please ensure that the Arduino is connected") #Send an error message
+            print("Please ensure that the micro controller is connected") #Send an error message
         return False #Close the code as False to show negative
     
     port = comports[0] #If there was no problem finding ports, pick the first one
@@ -25,9 +24,9 @@ def sendData(data, rate=9600, debug=0):
 
         delaycode.sleep(2) #Delays the code for 2 seconds
         if debug == 1: #If the debug mode is enabled
-            print(f"Connected to {port}") #Tells the user that they have conncected to the Arduino
+            print(f"Connected to {port}") #Tells the user that they have conncected to the micro controller
 
-        ser.write(data.encode('utf-8')) #This is the type of data encoding that will be used. Arduinos require UTF8. This sends the data in UTF8 to the device
+        ser.write(data.encode('utf-8')) #This is the type of data encoding that will be used. micro controllers require UTF8. This sends the data in UTF8 to the device
 
         if debug == 1: #If the debug mode is enabled
             print(f"Sent '{data}' successfully") #Display a success message
@@ -48,16 +47,16 @@ def sendData(data, rate=9600, debug=0):
     finally:
         #If any error occurred
         if ser.is_open: #And the port is still open
-            ser.close() #Close the port so that the Arduino can reconnect
+            ser.close() #Close the port so that the micro controller can reconnect
 
 def readData(data=None, rate=9600, debug=0):
-    #This section is for finding and initializing your Arduino
+    #This section is for finding and initializing your micro controller
     ports = serial.tools.list_ports.comports() #These are all the found ports that are active
     comports = [port.device for port in ports] #For each COM port in the list of active ports
 
     if not comports: #If there are no found ports
         if debug == 1: #If the debug mode is enabled
-            print("Please ensure that the Arduino is connected") #Send an error message
+            print("Please ensure that the micro controller is connected") #Send an error message
         return False #Close the code as False to show negative
     
     port = comports[0] #If there was no problem finding ports, pick the first one
@@ -66,25 +65,25 @@ def readData(data=None, rate=9600, debug=0):
         ser = serial.Serial(port, baudrate=rate, timeout=1) #Start the communication
         delaycode.sleep(2) #Delays the code for 2 seconds
         if debug == 1: #If the debug mode is enabled
-            print(f"Connected to {port}") #Tells the user that they have connected to the Arduino
+            print(f"Connected to {port}") #Tells the user that they have connected to the micro controller
         
         while True:
-            #Constantly check for incoming data from Arduino
+            #Constantly check for incoming data from micro controller
             if ser.in_waiting > 0: #If there is data waiting to be read
                 received_data = ser.read(ser.in_waiting).decode('utf-8') #Read and decode data
                 if debug == 1: #If the debug mode is enabled
-                    print(f"Received from Arduino: {received_data}")
+                    print(f"Received from micro controller: {received_data}")
 
                 #If there wasnt a specific return that the user is looking for
                 if data == None:
-                    return data #Return whatever the Arduino sends
+                    return data #Return whatever the micro controller sends
                 
                 #If the user was looking for something specific
                 elif received_data == data: #If the found data is what the user is looking for
                     return True #Return succesful
             else:
                 if debug == 1: #If the debug mode is enabled
-                    print("No data received from Arduino")
+                    print("No data received from micro controller")
     
     except serial.SerialException as error:
         if debug == 1: #If the debug mode is enabled
