@@ -56,7 +56,8 @@ def readData(data=None, rate=9600, debug=0):
     comports = [port.device for port in ports] #For each COM port in the list of active ports
 
     if not comports: #If there are no found ports
-        print("Please ensure that the Arduino is connected") #Send an error message
+        if debug == 1: #If the debug mode is enabled
+            print("Please ensure that the Arduino is connected") #Send an error message
         return False #Close the code as False to show negative
     
     port = comports[0] #If there was no problem finding ports, pick the first one
@@ -64,13 +65,15 @@ def readData(data=None, rate=9600, debug=0):
     try:
         ser = serial.Serial(port, baudrate=rate, timeout=1) #Start the communication
         delaycode.sleep(2) #Delays the code for 2 seconds
-        print(f"Connected to {port}") #Tells the user that they have connected to the Arduino
+        if debug == 1: #If the debug mode is enabled
+            print(f"Connected to {port}") #Tells the user that they have connected to the Arduino
         
         while True:
             #Constantly check for incoming data from Arduino
             if ser.in_waiting > 0: #If there is data waiting to be read
                 received_data = ser.read(ser.in_waiting).decode('utf-8') #Read and decode data
-                print(f"Received from Arduino: {received_data}")
+                if debug == 1: #If the debug mode is enabled
+                    print(f"Received from Arduino: {received_data}")
 
                 #If there wasnt a specific return that the user is looking for
                 if data == None:
@@ -80,14 +83,17 @@ def readData(data=None, rate=9600, debug=0):
                 elif received_data == data: #If the found data is what the user is looking for
                     return True #Return succesful
             else:
-                print("No data received from Arduino")
+                if debug == 1: #If the debug mode is enabled
+                    print("No data received from Arduino")
     
     except serial.SerialException as error:
-        print(f"Failed to connect to {port}: {error}") #Handle errors
+        if debug == 1: #If the debug mode is enabled
+            print(f"Failed to connect to {port}: {error}") #Handle errors
         return False
     
     except KeyboardInterrupt:
-        print("Stopping communication due to key handle") #Handle keyboard interrupt
+        if debug == 1: #If the debug mode is enabled
+            print("Stopping communication due to key handle") #Handle keyboard interrupt
         return False
     
     finally:
