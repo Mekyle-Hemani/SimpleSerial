@@ -10,7 +10,7 @@ def readDataOnce(data=None, rate=9600, debug=0):
     #Read data once
     return communication.readData(data=data, rate=rate, debug=debug)
 
-def WriteDataOnce(data, rate=9600, debug=0):
+def writeDataOnce(data, rate=9600, debug=0):
     #Write data once
     return communication.readData(data=data, rate=rate, debug=debug)
 

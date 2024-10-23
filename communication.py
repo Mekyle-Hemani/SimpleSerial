@@ -1,6 +1,6 @@
 import serial #Required library for sending data to an micro controller
 import serial.tools.list_ports #Required librray for checking all available micro controllers
-import time as delaycode #Required library for delaying the code
+import time #Required library for delaying the code
 import colourprint #A function that can print colours
 
 #Data is the text that will be sent to the micro controller
@@ -23,7 +23,7 @@ def sendData(data, rate=9600, debug=0):
     try:
         ser = serial.Serial(port, baudrate=rate, timeout=1) #Start the communication at the supplied port and at the given
 
-        delaycode.sleep(2) #Delays the code for 2 seconds
+        time.sleep(2) #Delays the code for 2 seconds
         if debug == 1: #If the debug mode is enabled
             colourprint.print_colored(f"Connected to {port}", colourprint.GREEN) #Tells the user that they have conncected to the micro controller
 
@@ -64,7 +64,7 @@ def readData(data=None, rate=9600, debug=0):
 
     try:
         ser = serial.Serial(port, baudrate=rate, timeout=1) #Start the communication
-        delaycode.sleep(2) #Delays the code for 2 seconds
+        time.sleep(2) #Delays the code for 2 seconds
         if debug == 1: #If the debug mode is enabled
             colourprint.print_colored(f"Connected to {port}", colourprint.GREEN) #Tells the user that they have connected to the micro controller
         
