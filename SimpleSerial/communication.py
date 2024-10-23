@@ -38,17 +38,12 @@ def sendData(data, rate=9600, debug=0):
         #If the library finds an error
         if debug == 1: #If the debug mode is enabled
             colourprint.print_colored(f"Failed to connect to {port}: {error}", colourprint.RED) #Say an error was found and on what COM port it occorred on
-        return False #Return a negative element
     
     except KeyboardInterrupt:
         #If the user uses a keyboard to quit the code
         if debug == 1: #If the debug mode is enabled
             colourprint.print_colored("Stopping communication due to key handle", colourprint.BLUE) #Tells the user why the code stopped
         return False #Return a negative element
-    finally:
-        #If any error occurred
-        if ser.is_open: #And the port is still open
-            ser.close() #Close the port so that the micro controller can reconnect
 
 def readData(data=None, rate=9600, debug=0):
     #This section is for finding and initializing your micro controller
@@ -89,13 +84,8 @@ def readData(data=None, rate=9600, debug=0):
     except serial.SerialException as error:
         if debug == 1: #If the debug mode is enabled
             colourprint.print_colored(f"Failed to connect to {port}: {error}", colourprint.RED) #Handle errors
-        return False
     
     except KeyboardInterrupt:
         if debug == 1: #If the debug mode is enabled
             colourprint.print_colored("Stopping communication due to key handle", colourprint.RED) #Handle keyboard interrupt
         return False
-    
-    finally:
-        if ser.is_open: #Ensure the port is closed after completion
-            ser.close()

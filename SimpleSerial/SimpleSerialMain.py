@@ -18,7 +18,7 @@ def writeDataOnce(data, rate=9600, debug=0):
 #multiRead.py
 def readDataForMultipleItemsOnce(data, rate=9600, debug=0):
     #Read the data for a specific item (data) until it finds it
-    return multiRead.readFor(data, rate=rate, debug=debug)
+    return multiRead.readFor(data=data, rate=rate, debug=debug)
 
 
 #Constants.py
