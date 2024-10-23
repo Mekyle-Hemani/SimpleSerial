@@ -1,7 +1,7 @@
 import serial #Required library for sending data to an micro controller
 import serial.tools.list_ports #Required librray for checking all available micro controllers
 import time #Required library for delaying the code
-import colourprint #A function that can print colours
+from . import colourprint #A function that can print colours
 
 #Data is the text that will be sent to the micro controller
 #Rate is the rate of the information being sent (This is different for all types of micro controllers however the micro controller Uno uses 9600)

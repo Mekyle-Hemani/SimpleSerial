@@ -1,5 +1,5 @@
-import communication #Imports the file that has all the basic communication
-import colourprint #A function that can print colours
+from . import communication #Imports the file that has all the basic communication
+from . import colourprint #A function that can print colours
 
 #Creates a new function that can search for items in the "searching" list
 #Searching list must have only string items

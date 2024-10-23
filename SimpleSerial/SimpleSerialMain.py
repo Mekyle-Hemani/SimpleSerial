@@ -1,7 +1,7 @@
 #All other functions by file
-import communication
-import constants
-import multiRead
+from . import communication
+from . import constants
+from . import multiRead
 
 #Condensed functions by name
 
