@@ -3,3 +3,5 @@ build/
 dist/
 
 SimpleSerial.egg-info/
+
+test.py
