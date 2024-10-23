@@ -66,16 +66,18 @@ def readData(data=None, rate=9600, debug=0):
         while True:
             #Constantly check for incoming data from micro controller
             if ser.in_waiting > 0: #If there is data waiting to be read
-                received_data = ser.read(ser.in_waiting).decode('utf-8') #Read and decode data
+                #received_data = ser.read(ser.in_waiting).decode('utf-8') #Read and decode data
+                received_data = ser.read(ser.in_waiting).decode('utf-8', errors='ignore')
+
                 if debug == 1: #If the debug mode is enabled
                     colourprint.print_colored(f"Received from micro controller: {received_data}", colourprint.GREEN)
 
                 #If there wasnt a specific return that the user is looking for
                 if data == None:
-                    return data #Return whatever the micro controller sends
+                    return received_data #Return whatever the micro controller sends
                 
                 #If the user was looking for something specific
-                elif received_data == data: #If the found data is what the user is looking for
+                elif data in received_data: #If the found data is what the user is looking for
                     return True #Return succesful
             else:
                 if debug == 1: #If the debug mode is enabled

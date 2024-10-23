@@ -4,6 +4,6 @@ dist/
 
 SimpleSerial.egg-info/
 
-test.py
+test/
 
 SimpleSerial/__pycache__
