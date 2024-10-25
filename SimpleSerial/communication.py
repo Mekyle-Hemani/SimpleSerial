@@ -15,7 +15,7 @@ def sendData(data, rate=9600, debug=0):
     if not comports: #If there are no found ports
         if debug == 1: #If the debug mode is enabled
             colourprint.print_colored("Please ensure that the micro controller is connected", colourprint.ORANGE) #Send an error message
-        return 0 #Close the code as False to show negative
+        return "0" #Close the code as False to show negative
     
     port = comports[0] #If there was no problem finding ports, pick the first one
 
@@ -53,7 +53,7 @@ def readData(data=None, rate=9600, debug=0):
     if not comports: #If there are no found ports
         if debug == 1: #If the debug mode is enabled
             colourprint.print_colored("Please ensure that the micro controller is connected", colourprint.RED) #Send an error message
-        return 0 #Close the code as False to show negative
+        return "0" #Close the code as False to show negative
     
     port = comports[0] #If there was no problem finding ports, pick the first one
 
