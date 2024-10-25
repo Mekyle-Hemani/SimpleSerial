@@ -1,7 +1,7 @@
 #First thing to do is type this in terminal
 '''
 
-pip install SimpleWine
+pip install SimpleSerial
 
 '''
 
