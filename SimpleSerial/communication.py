@@ -7,6 +7,49 @@ from . import colourprint #A function that can print colours
 #Rate is the rate of the information being sent (This is different for all types of micro controllers however the micro controller Uno uses 9600)
 
 def sendData(data, rate=9600, debug=0):
+    ports = serial.tools.list_ports.comports() #These are all the found ports that are active
+    comports = [port.device for port in ports] #For each COM port in the list of active ports
+
+    if not comports: #If there are no found ports
+        if debug == 1: #If the debug mode is enabled
+            colourprint.print_colored("Please ensure that the micro controller is connected", colourprint.ORANGE) #Send an error message
+        return "0" #Close the code as False to show negative
+    
+    port = comports[0] #If there was no problem finding ports, pick the first one
+
+    ser = serial.Serial(port, 9600)
+
+    if debug == 1: #If the debug mode is enabled
+            colourprint.print_colored(f"Connected to {port}", colourprint.GREEN) #Tells the user that they have connected to the micro controller
+
+    try:
+        while True:
+            ser.write((data + "\n").encode())
+
+            time.sleep(1)
+
+            if debug == 1: #If the debug mode is enabled
+                colourprint.print_colored(f"Sent '{data}' successfully", colourprint.GREEN) #Display a success message
+
+            return True #Return a positive element
+        
+    except serial.SerialException as error:
+        #If the library finds an error
+        if debug == 1: #If the debug mode is enabled
+            colourprint.print_colored(f"Failed to connect to {port}: {error}", colourprint.RED) #Say an error was found and on what COM port it occorred on
+        
+    except KeyboardInterrupt:
+        #If the user uses a keyboard to quit the code
+        if debug == 1: #If the debug mode is enabled
+            colourprint.print_colored("Stopping communication due to key handle", colourprint.BLUE) #Tells the user why the code stopped
+        return False #Return a negative element
+    
+    finally:
+        ser.close()
+
+    '''
+
+
     #This section is for finding and initializing your micro controller
 
     ports = serial.tools.list_ports.comports() #These are all the found ports that are active
@@ -25,7 +68,7 @@ def sendData(data, rate=9600, debug=0):
 
         time.sleep(2) #Delays the code for 2 seconds
         if debug == 1: #If the debug mode is enabled
-            colourprint.print_colored(f"Connected to {port}", colourprint.GREEN) #Tells the user that they have conncected to the micro controller
+            colourprint.print_colored(f"Connected to {port}", colourprint.GREEN) #Tells the user that they have connected to the micro controller
 
         ser.write(data.encode('utf-8')) #This is the type of data encoding that will be used. micro controllers require UTF8. This sends the data in UTF8 to the device
 
@@ -43,7 +86,7 @@ def sendData(data, rate=9600, debug=0):
         #If the user uses a keyboard to quit the code
         if debug == 1: #If the debug mode is enabled
             colourprint.print_colored("Stopping communication due to key handle", colourprint.BLUE) #Tells the user why the code stopped
-        return False #Return a negative element
+        return False #Return a negative element'''
 
 def readData(data=None, rate=9600, debug=0):
     #This section is for finding and initializing your micro controller
