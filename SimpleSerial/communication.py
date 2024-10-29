@@ -23,7 +23,8 @@ def sendData(data, rate=9600, debug=0):
         time.sleep(1)
         return True
     except Exception as e:
-        print("Error sending data:", e)
+        if debug == 1: #If the debug mode is enabled
+            colourprint.print_colored("Error sending data: "+e, colourprint.RED)
         return False
     finally:
         ser.close()
